@@ -1,9 +1,31 @@
-module.exports = function(grunt){
+/* global module: true */
+module.exports = function (grunt) {
   grunt.initConfig({
-    'hello-world':{}
+    eslint: {
+      options: {
+        configFile: '.eslintrc.json'
+      },
+      target: ['*.js']
+    },
+    csslint: {
+      options: {
+        csslintrc: '.csslintrc'
+      },
+      src: '*.css'
+    },
+    htmlhint: {
+      options: {
+        htmlhintrc: '.htmlhintrc'
+      },
+      src: '*.html'
+    },
   });
-  grunt.registerTask('hello-world','My "asyncfoo" task.',function(){
-    grunt.log.writeln('hello world');
-  });
-  grunt.registerTask('default',['hello-world']);
+
+  grunt.loadNpmTasks('grunt-contrib-csslint');
+  grunt.loadNpmTasks('grunt-htmlhint');
+  grunt.loadNpmTasks('grunt-eslint');
+
+  grunt.registerTask('lint', ['htmlhint', 'csslint', 'eslint']);
+
+
 };
